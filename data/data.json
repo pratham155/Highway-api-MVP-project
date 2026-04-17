@@ -1,0 +1,219 @@
+[
+  {
+    "name": "Highway Dhaba No. 1",
+    "lat": 28.7041, "lon": 77.1025,
+    "distance_from_route_km": 0.5, "detour_km": 1.0,
+    "famous_for": "Butter Chicken & Naan",
+    "dishes": ["butter chicken", "naan", "dal makhani", "lassi"],
+    "rating": 4.5, "washroom": true, "parking": true, "fast_service": false, "type": "non-veg"
+  },
+  {
+    "name": "Punjabi Tadka",
+    "lat": 28.6139, "lon": 77.2090,
+    "distance_from_route_km": 1.2, "detour_km": 2.5,
+    "famous_for": "Chole Bhature & Lassi",
+    "dishes": ["chole bhature", "lassi", "aloo paratha", "paneer tikka"],
+    "rating": 4.2, "washroom": true, "parking": true, "fast_service": true, "type": "veg"
+  },
+  {
+    "name": "Bikaner Sweets & Snacks",
+    "lat": 28.5355, "lon": 77.3910,
+    "distance_from_route_km": 0.3, "detour_km": 0.6,
+    "famous_for": "Kachori & Samosa",
+    "dishes": ["kachori", "samosa", "jalebi", "rasgulla", "chai"],
+    "rating": 4.0, "washroom": false, "parking": true, "fast_service": true, "type": "veg"
+  },
+  {
+    "name": "Royal Mughal Restaurant",
+    "lat": 27.1767, "lon": 78.0081,
+    "distance_from_route_km": 2.0, "detour_km": 4.0,
+    "famous_for": "Biryani & Kebabs",
+    "dishes": ["biryani", "seekh kebab", "mutton curry", "shahi tukda"],
+    "rating": 4.7, "washroom": true, "parking": true, "fast_service": false, "type": "non-veg"
+  },
+  {
+    "name": "South Express",
+    "lat": 28.4089, "lon": 77.3178,
+    "distance_from_route_km": 0.8, "detour_km": 1.5,
+    "famous_for": "Dosa & Filter Coffee",
+    "dishes": ["masala dosa", "idli", "vada", "filter coffee", "uttapam"],
+    "rating": 4.3, "washroom": true, "parking": false, "fast_service": true, "type": "veg"
+  },
+  {
+    "name": "Sharma Ji Ka Dhaba",
+    "lat": 28.9845, "lon": 77.7064,
+    "distance_from_route_km": 0.2, "detour_km": 0.4,
+    "famous_for": "Aloo Paratha & Chai",
+    "dishes": ["aloo paratha", "chai", "makki roti", "sarson saag", "lassi"],
+    "rating": 3.9, "washroom": false, "parking": true, "fast_service": true, "type": "veg"
+  },
+  {
+    "name": "Bombay Bites",
+    "lat": 28.6692, "lon": 77.4538,
+    "distance_from_route_km": 1.5, "detour_km": 3.0,
+    "famous_for": "Vada Pav & Pav Bhaji",
+    "dishes": ["vada pav", "pav bhaji", "bhel puri", "misal pav", "chai"],
+    "rating": 4.1, "washroom": true, "parking": false, "fast_service": true, "type": "veg"
+  },
+  {
+    "name": "Frontier Grill",
+    "lat": 29.3909, "lon": 76.9635,
+    "distance_from_route_km": 3.0, "detour_km": 6.0,
+    "famous_for": "Tandoori Chicken & Roti",
+    "dishes": ["tandoori chicken", "roti", "dal tadka", "raita", "lassi"],
+    "rating": 4.6, "washroom": true, "parking": true, "fast_service": false, "type": "non-veg"
+  },
+  {
+    "name": "Quick Bites Cafe",
+    "lat": 28.3183, "lon": 77.5080,
+    "distance_from_route_km": 0.4, "detour_km": 0.8,
+    "famous_for": "Burgers & Wraps",
+    "dishes": ["burger", "wrap", "fries", "cold coffee", "sandwich"],
+    "rating": 3.7, "washroom": true, "parking": true, "fast_service": true, "type": "veg"
+  },
+  {
+    "name": "Dilli Darbar",
+    "lat": 28.7495, "lon": 77.1173,
+    "distance_from_route_km": 1.0, "detour_km": 2.0,
+    "famous_for": "Butter Naan & Paneer Dishes",
+    "dishes": ["butter naan", "paneer butter masala", "dal fry", "gulab jamun", "lassi"],
+    "rating": 4.4, "washroom": true, "parking": true, "fast_service": false, "type": "veg"
+  },
+  
+  {
+    "name": "Maddur Tiffanys",
+    "lat": 12.5825,
+    "lon": 77.0451,
+    "distance_from_bangalore_km": 80,
+    "distance_from_route_km": 0.5,
+    "detour_km": 0.5,
+    "famous_for": "Maddur Vada",
+    "dishes": ["maddur vada", "idli", "dosa"],
+    "rating": 4.3,
+    "washroom": true,
+    "parking": true,
+    "fast_service": true,
+    "type": "veg"
+  },
+  {
+  "name": "Paakashala",
+  "lat": 14.2489,
+  "lon": 76.4258,
+  "distance_from_bangalore_km": 200,
+  "distance_from_route_km": 0.2,
+  "detour_km": 0.2,
+  "famous_for": "South Indian meals, dosa",
+  "dishes": ["dosa", "idli", "meals", "coffee"],
+  "rating": 4.2,
+  "washroom": true,
+  "parking": true,
+  "fast_service": true,
+  "type": "veg"
+},
+  {
+    "name": "Kamat Lokaruchi",
+    "lat": 12.7266,
+    "lon": 77.2810,
+    "distance_from_bangalore_km": 60,
+    "distance_from_route_km": 1.0,
+    "detour_km": 1.0,
+    "famous_for": "South Indian Meals",
+    "dishes": ["meals", "dosa", "ragi mudde"],
+    "rating": 4.2,
+    "washroom": true,
+    "parking": true,
+    "fast_service": false,
+    "type": "veg"
+  },
+  {
+    "name": "Empire Restaurant Ramanagara",
+    "lat": 12.7217,
+    "lon": 77.2813,
+    "distance_from_bangalore_km": 55,
+    "distance_from_route_km": 0.8,
+    "detour_km": 0.8,
+    "famous_for": "Chicken Kabab",
+    "dishes": ["chicken kabab", "biryani", "shawarma"],
+    "rating": 4.1,
+    "washroom": true,
+    "parking": true,
+    "fast_service": true,
+    "type": "non-veg"
+  },
+  {
+    "name": "Hotel RRR",
+    "lat": 12.5600,
+    "lon": 77.0200,
+    "distance_from_bangalore_km": 85,
+    "distance_from_route_km": 1.2,
+    "detour_km": 1.2,
+    "famous_for": "Andhra Meals",
+    "dishes": ["andhra meals", "chicken fry", "biryani"],
+    "rating": 4.0,
+    "washroom": true,
+    "parking": true,
+    "fast_service": false,
+    "type": "non-veg"
+  },
+  {
+    "name": "Adyar Ananda Bhavan (A2B)",
+    "lat": 12.7450,
+    "lon": 77.3000,
+    "distance_from_bangalore_km": 50,
+    "distance_from_route_km": 0.6,
+    "detour_km": 0.6,
+    "famous_for": "South Indian Tiffin",
+    "dishes": ["idli", "dosa", "pongal"],
+    "rating": 4.2,
+    "washroom": true,
+    "parking": true,
+    "fast_service": true,
+    "type": "veg"
+  },
+  {
+    "name": "Shivalli Restaurant",
+    "lat": 14.4663,
+    "lon": 75.9200,
+    "distance_from_bangalore_km": 250,
+    "distance_from_route_km": 0.5,
+    "detour_km": 0.5,
+    "famous_for": "Benne Dosa",
+    "dishes": ["benne dosa", "idli", "vada"],
+    "rating": 4.4,
+    "washroom": true,
+    "parking": true,
+    "fast_service": true,
+    "type": "veg"
+  },
+  {
+  "name": "Hotel Bamboo Tree",
+  "lat": 14.2036,
+  "lon": 76.4287,
+  "distance_from_bangalore_km": 195,
+  "distance_from_route_km": 0.3,
+  "detour_km": 0.3,
+  "famous_for": "Chicken meals",
+  "dishes": ["chicken curry", "biryani", "meals"],
+  "rating": 4.2,
+  "washroom": true,
+  "parking": true,
+  "fast_service": true,
+  "type": "non-veg"
+},
+
+  {
+  "name": "Spoorthi Delicacy Veg",
+  "lat": 14.3408,
+  "lon": 76.0205,
+  "distance_from_bangalore_km": 260,
+  "distance_from_route_km": 0.2,
+  "detour_km": 0.2,
+  "famous_for": "South Indian Meals & Dosa",
+  "dishes": ["dosa", "idli", "vada", "meals", "coffee"],
+  "rating": 4.1,
+  "washroom": true,
+  "parking": true,
+  "fast_service": true,
+  "type": "veg"
+  }
+]

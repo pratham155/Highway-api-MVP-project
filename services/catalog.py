@@ -6,6 +6,7 @@ from __future__ import annotations
 
 import re
 from collections import Counter
+from datetime import datetime
 from typing import Iterable, Optional
 
 from models import Coordinate, Restaurant, RestaurantDetail, RestaurantSummary, RouteSummary
@@ -152,6 +153,33 @@ def _meta_for(restaurant: Restaurant) -> dict[str, str]:
     )
 
 
+def resolve_hours(restaurant: Restaurant) -> tuple[str | None, str | None, str]:
+    meta = _meta_for(restaurant)
+    opening_time = restaurant.opening_time
+    closing_time = restaurant.closing_time
+    if opening_time and closing_time:
+        return opening_time, closing_time, f"{opening_time} - {closing_time}"
+    fallback_hours = meta["hours"]
+    return opening_time, closing_time, fallback_hours
+
+
+def compute_is_open(opening_time: str | None, closing_time: str | None) -> bool:
+    if not opening_time or not closing_time:
+        return True
+
+    try:
+        now = datetime.now().time()
+        opens_at = datetime.strptime(opening_time, "%I:%M %p").time()
+        closes_at = datetime.strptime(closing_time, "%I:%M %p").time()
+    except ValueError:
+        return True
+
+    if closes_at >= opens_at:
+        return opens_at <= now <= closes_at
+
+    return now >= opens_at or now <= closes_at
+
+
 def build_summary(
     restaurant: Restaurant,
     *,
@@ -165,6 +193,7 @@ def build_summary(
     distance_from_origin_km: Optional[float] = None,
 ) -> RestaurantSummary:
     meta = _meta_for(restaurant)
+    opening_time, closing_time, hours = resolve_hours(restaurant)
     resolved_distance_from_route_km = distance_from_route_km if distance_from_route_km is not None else restaurant.distance_from_route_km
     resolved_detour_km = detour_km if detour_km is not None else restaurant.detour_km
     return RestaurantSummary(
@@ -180,7 +209,10 @@ def build_summary(
         matching_dishes=match_dishes(restaurant, dish),
         phone=meta["phone"],
         address=meta["address"],
-        is_open=True,
+        is_open=compute_is_open(opening_time, closing_time),
+        opening_time=opening_time,
+        closing_time=closing_time,
+        hours=hours,
         tags=build_tags(restaurant),
         score=score,
         reason=reason,
@@ -196,6 +228,7 @@ def build_detail(
     related: list[Restaurant],
 ) -> RestaurantDetail:
     meta = _meta_for(restaurant)
+    _, _, hours = resolve_hours(restaurant)
     suggested_stops = [
         build_summary(candidate)
         for candidate in related
@@ -205,7 +238,7 @@ def build_detail(
         **build_summary(restaurant).model_dump(),
         dishes=[dish.title() for dish in restaurant.dishes],
         highway=route.highway,
-        hours=meta["hours"],
+        hours=hours,
         about=meta["about"],
         amenities=build_tags(restaurant),
         suggested_stops=suggested_stops,

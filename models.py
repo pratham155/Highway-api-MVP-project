@@ -38,6 +38,8 @@ class Restaurant(BaseModel):
     fast_service: bool
     type: str
     distance_from_bangalore_km: Optional[float] = Field(default=None, ge=0)
+    opening_time: Optional[str] = None
+    closing_time: Optional[str] = None
 
 
 class RestaurantSummary(BaseModel):
@@ -54,6 +56,9 @@ class RestaurantSummary(BaseModel):
     phone: str
     address: str
     is_open: bool
+    opening_time: Optional[str] = None
+    closing_time: Optional[str] = None
+    hours: Optional[str] = None
     tags: List[str]
     score: Optional[float] = None
     reason: Optional[str] = None
@@ -78,6 +83,12 @@ class RecommendationResponse(BaseModel):
     status: str = "ok"
     mode: str
     results: List[RecommendedStop]
+    message: Optional[str] = None
+
+
+class DirectionsResponse(BaseModel):
+    status: str = "ok"
+    route: RouteSummary
     message: Optional[str] = None
 
 

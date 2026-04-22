@@ -15,9 +15,9 @@ from fastapi.responses import JSONResponse
 
 sys.path.insert(0, str(Path(__file__).parent))
 
-from models import Coordinate, DishSearchResponse, HomeResponse, RecommendationResponse, RestaurantDetail, RestaurantListResponse, RouteSummary
+from models import Coordinate, DirectionsResponse, DishSearchResponse, HomeResponse, RecommendationResponse, RestaurantDetail, RestaurantListResponse, RouteSummary
 from services.catalog import build_detail, build_summary, filter_restaurants, get_route, popular_dishes, slugify
-from services.dynamic_route import fetch_route_coordinates
+from services.dynamic_route import fetch_route_coordinates, fetch_route_details
 from services.loader import load_restaurants
 from services.ranking import rank_restaurants, search_restaurants_by_craving
 
@@ -73,15 +73,26 @@ def _build_dynamic_route_summary(
     origin: Coordinate,
     destination: Coordinate,
     route_coordinates: list[Coordinate],
+    distance_km: Optional[float] = None,
+    eta_minutes: Optional[int] = None,
 ) -> RouteSummary:
-    distance_km = _haversine_km(origin.lat, origin.lon, destination.lat, destination.lon)
+    resolved_distance_km = (
+        round(distance_km, 1)
+        if distance_km is not None
+        else _haversine_km(origin.lat, origin.lon, destination.lat, destination.lon)
+    )
+    resolved_eta_minutes = (
+        eta_minutes
+        if eta_minutes is not None
+        else max(20, round((resolved_distance_km / 55.0) * 60))
+    )
     return RouteSummary(
         id="dynamic-route",
         origin=f"{origin.lat:.4f}, {origin.lon:.4f}",
         destination=f"{destination.lat:.4f}, {destination.lon:.4f}",
         highway="Dynamic Route",
-        distance_km=round(distance_km, 1),
-        eta_minutes=max(20, round((distance_km / 55.0) * 60)),
+        distance_km=resolved_distance_km,
+        eta_minutes=resolved_eta_minutes,
         coordinates=route_coordinates,
     )
 
@@ -197,18 +208,20 @@ def restaurants(
     if lat is not None and lon is not None and dest_lat is not None and dest_lon is not None:
         origin = Coordinate(lat=lat, lon=lon)
         destination = Coordinate(lat=dest_lat, lon=dest_lon)
-        route_coordinates = fetch_route_coordinates(origin, destination)
+        route_metrics = fetch_route_details(origin, destination)
         route = _build_dynamic_route_summary(
             origin=origin,
             destination=destination,
-            route_coordinates=route_coordinates,
+            route_coordinates=route_metrics.coordinates,
+            distance_km=route_metrics.distance_km,
+            eta_minutes=route_metrics.duration_minutes,
         )
 
         if dish:
             summaries = search_restaurants_by_craving(
                 _restaurants,
                 origin=origin,
-                route_coordinates=route_coordinates,
+                route_coordinates=route_metrics.coordinates,
                 craving=dish,
                 limit=limit,
             )
@@ -216,7 +229,7 @@ def restaurants(
             summaries = rank_restaurants(
                 _restaurants,
                 origin=origin,
-                route_coordinates=route_coordinates,
+                route_coordinates=route_metrics.coordinates,
                 top_n=limit,
             )
 
@@ -328,3 +341,31 @@ def recommend(
             message="No restaurants found.",
         )
     return RecommendationResponse(status="ok", mode="default", results=top_stops)
+
+
+@app.get(
+    "/directions",
+    response_model=DirectionsResponse,
+    tags=["Recommendations"],
+    summary="Route details between the current user location and a selected restaurant",
+)
+def directions(
+    start_lat: float = Query(..., description="Starting latitude", example=12.9716),
+    start_lon: float = Query(..., description="Starting longitude", example=77.5946),
+    end_lat: float = Query(..., description="Destination latitude", example=12.2958),
+    end_lon: float = Query(..., description="Destination longitude", example=76.6394),
+    end_label: Optional[str] = Query(default=None, description="Destination label"),
+) -> DirectionsResponse:
+    origin = Coordinate(lat=start_lat, lon=start_lon)
+    destination = Coordinate(lat=end_lat, lon=end_lon)
+    route_metrics = fetch_route_details(origin, destination)
+    route = RouteSummary(
+        id="selected-stop",
+        origin="Current Location",
+        destination=end_label or f"{end_lat:.4f}, {end_lon:.4f}",
+        highway="Turn-by-turn route",
+        distance_km=route_metrics.distance_km,
+        eta_minutes=route_metrics.duration_minutes,
+        coordinates=route_metrics.coordinates,
+    )
+    return DirectionsResponse(status="ok", route=route)
